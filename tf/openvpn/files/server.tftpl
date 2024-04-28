@@ -1,0 +1,25 @@
+port 1190
+proto udp
+dev tun
+topology subnet
+ca server/ca.crt
+cert server/server.crt
+key server/server.key
+dh server/dh.pem
+server <%= @subnet %> <%= @mask %>
+keepalive 10 600
+tun-mtu 1500
+allow-compression no
+persist-key
+persist-tun
+user nobody
+group nobody
+status /var/run/openvpn-server/openvpn-status.log
+log-append /var/log/openvpn/openvpn.log
+verb 3
+tls-server
+auth-user-pass-verify /etc/openvpn/scripts/checkpw.sh via-env
+client-connect /etc/openvpn/scripts/connect.py
+username-as-common-name
+verify-client-cert none
+script-security 3
