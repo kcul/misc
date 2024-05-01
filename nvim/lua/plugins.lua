@@ -36,7 +36,15 @@ require("lazy").setup({
         "L3MON4D3/LuaSnip",
         version = "v2.*",
     },
-
+    -- Color scheme
+    "tanvirtin/monokai.nvim",
+    "morhetz/gruvbox",
+    -- {
+    --   "folke/tokyonight.nvim",
+    --   lazy = false,
+    --   priority = 1000,
+    --   opts = {},
+    -- },
     -- LSP manager
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
