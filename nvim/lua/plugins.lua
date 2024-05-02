@@ -37,14 +37,7 @@ require("lazy").setup({
         version = "v2.*",
     },
     -- Color scheme
-    "tanvirtin/monokai.nvim",
     "morhetz/gruvbox",
-    -- {
-    --   "folke/tokyonight.nvim",
-    --   lazy = false,
-    --   priority = 1000,
-    --   opts = {},
-    -- },
     -- LSP manager
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -57,4 +50,6 @@ require("lazy").setup({
     -- use opts = {} for passing setup options
     -- this is equalent to setup({}) function
     },
+    -- Surround
+    'tpope/vim-surround',
 })
