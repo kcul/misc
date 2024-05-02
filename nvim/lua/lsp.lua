@@ -1,5 +1,6 @@
 -- Note: The order matters: mason -> mason-lspconfig -> lspconfig
 require("mason").setup({
+    PATH = "prepend", -- "skip" seems to cause the spawning error
     ui = {
         icons = {
             package_installed = "✓",

@@ -52,4 +52,12 @@ require("lazy").setup({
     },
     -- Surround
     'tpope/vim-surround',
+    -- Commentor
+    {
+        'numToStr/Comment.nvim',
+        -- nerdcommenter doesn't work in neovim
+        -- 'preservim/nerdcommenter',
+        opts = {},
+        lazy = false,
+    }
 })
