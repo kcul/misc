@@ -43,5 +43,5 @@ Content-Disposition: attachment; filename="userdata.sh"
 
 #!/bin/bash
 echo 'hello world.' > /root/hello.txt
-bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)" | yes
+yes | bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)" 
 --//--
