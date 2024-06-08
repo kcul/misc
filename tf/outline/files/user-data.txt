@@ -1,0 +1,47 @@
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+Number-Attachments: 2
+
+--//
+MIME-Version: 1.0
+Content-Type: text/cloud-config
+Content-Disposition: attachment; filename="cloud-config.txt"
+
+#cloud-config
+users:
+  - default
+  - name: sky
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWTC/e0kO9prP54V9mW1sfOQquz1WGpwhOAXD1ZUTwA sky@skys-MacBook-Pro.local
+
+packages:
+  - nc
+  - jq
+  - nvme-cli
+  - iftop
+  - docker
+
+package_update: true
+package_upgrade: true
+
+ntp:
+  enabled: true
+  ntp_client: chrony
+  servers:
+    - 0.amazon.pool.ntp.org
+    - 1.amazon.pool.ntp.org
+    - 2.amazon.pool.ntp.org
+    - 3.amazon.pool.ntp.org
+    - 169.254.169.123 prefer minpoll 4 maxpoll 4
+
+--//
+MIME-Version: 1.0
+Content-Type: text/x-shellscript
+Content-Disposition: attachment; filename="userdata.sh"
+
+#!/bin/bash
+echo 'hello world.' > /root/hello.txt
+bash -c "$(wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server_manager/install_scripts/install_server.sh)" | yes
+--//--

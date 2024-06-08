@@ -16,7 +16,7 @@ data "aws_internet_gateway" "default" {
   }
 }
 
-resource "aws_subnet" "v2ray" {
+resource "aws_subnet" "outline" {
   vpc_id     = aws_default_vpc.default.id
   cidr_block = cidrsubnet(aws_default_vpc.default.cidr_block, 8, 255)
 
