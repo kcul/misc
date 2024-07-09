@@ -1,6 +1,12 @@
 ### nvim
 This is configuration of nvim, sync this directory to ~/.config/nvim/ after neovim installed.
 Post: [Transform Your Neovim into a IDE: A Step-by-Step Guide](https://martinlwx.github.io/en/config-neovim-from-scratch/)
+#### prerequisition
+```shell
+brew install go gopls
+```
+
+#### configuration
 ```shell
 # sync updated nvim config to this repo
 rsync -r ~/.config/nvim/ ./nvim/
