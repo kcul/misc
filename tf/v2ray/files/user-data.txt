@@ -1,0 +1,87 @@
+Content-Type: multipart/mixed; boundary="===============5927547425093238182=="
+MIME-Version: 1.0
+Number-Attachments: 2
+
+--===============5927547425093238182==
+MIME-Version: 1.0
+Content-Type: text/cloud-config
+Content-Disposition: attachment; filename="cloud-config.txt"
+
+#cloud-config
+users:
+  - default
+  - name: sky
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKWTC/e0kO9prP54V9mW1sfOQquz1WGpwhOAXD1ZUTwA sky@skys-MacBook-Pro.local
+
+package_update: true
+package_upgrade: true
+
+ntp:
+  enabled: true
+  ntp_client: chrony
+  servers:
+    - 0.amazon.pool.ntp.org
+    - 1.amazon.pool.ntp.org
+    - 2.amazon.pool.ntp.org
+    - 3.amazon.pool.ntp.org
+    - 169.254.169.123 prefer minpoll 4 maxpoll 4
+
+--===============5927547425093238182==
+MIME-Version: 1.0
+Content-Type: text/x-shellscript
+Content-Disposition: attachment; filename="userdata.sh"
+
+#!/bin/bash
+echo 'hello world.' > /root/hello.txt
+curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh -o /tmp/install-release.sh
+sudo /bin/bash /tmp/install-release.sh
+sed -i '/ExecStart/ i\Environment="V2RAY_VMESS_AEAD_FORCED=false"' /etc/systemd/system/v2ray.service
+# UUID=$(/usr/local/bin/v2ctl uuid)
+UUID="bdd35852-de7a-a107-0a21-53c869ce6598"
+cat > /usr/local/etc/v2ray/config.json <<EOF
+{
+  "inbounds": [{
+    "port": 80,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "$UUID",
+          "level": 1,
+          "alterId": 64
+        }
+      ]
+    },
+    "streamSettings":{
+      "wsSettings":{
+        "path":"/",
+        "headers":{}
+      },
+      "network":"ws"
+    }
+  }],
+  "outbounds": [{
+    "protocol": "freedom",
+    "settings": {}
+  },{
+    "protocol": "blackhole",
+    "settings": {},
+    "tag": "blocked"
+  }],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": ["geoip:private"],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
+EOF
+systemctl enable v2ray
+systemctl start v2ray
+--===============5927547425093238182==--

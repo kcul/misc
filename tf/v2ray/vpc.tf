@@ -16,11 +16,11 @@ data "aws_internet_gateway" "default" {
   }
 }
 
-resource "aws_subnet" "openvpn" {
+resource "aws_subnet" "v2ray" {
   vpc_id     = aws_default_vpc.default.id
   cidr_block = cidrsubnet(aws_default_vpc.default.cidr_block, 8, 255)
 
   tags = {
-    Name = "openvpn"
+    Name = "V2ray"
   }
 }

@@ -1,5 +1,5 @@
-resource "aws_iam_role" "openvpn" {
-  name_prefix = "openvpn-role"
+resource "aws_iam_role" "v2ray" {
+  name_prefix = "v2ray-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -14,12 +14,13 @@ resource "aws_iam_role" "openvpn" {
     ]
   })
   managed_policy_arns = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore" ]
+
   tags = {
-    Name = "openvpn"
+    Name = "v2ray"
   }
 }
 
-resource "aws_iam_instance_profile" "openvpn" {
-  name_prefix = "openvpn-role"
-  role = aws_iam_role.openvpn.name
+resource "aws_iam_instance_profile" "v2ray" {
+  name_prefix = "v2ray-role"
+  role = aws_iam_role.v2ray.name
 }
