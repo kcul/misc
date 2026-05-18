@@ -2,3 +2,5 @@ theme = "gruvbox"
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
+[editor.soft-wrap]
+enable = true
