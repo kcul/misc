@@ -43,9 +43,9 @@ resource "aws_instance" "v2ray" {
       volume_size = 8
       volume_type = "gp3"
   }
-#  lifecycle {
-#    ignore_changes = [user_data]
-#  }
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 }
 
 resource "aws_eip" "v2ray" {
