@@ -7,7 +7,7 @@ variable "region" {
 variable "profile" {
   description = "AWS profile"
   type = string
-  default = "sky"
+  default = "default"
 }
 
 variable "my_ip" {
