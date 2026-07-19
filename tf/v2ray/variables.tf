@@ -1,7 +1,7 @@
 variable "region" {
   description = "AWS region"
   type = string
-  default = "ap-southeast-1"
+  default = "ap-northeast-1"
 }
 
 variable "profile" {
@@ -19,7 +19,7 @@ variable "ssh_allowed_cidrs" {
 variable "v2ray_port" {
   description = "Port the v2ray/xray server listens on"
   type        = number
-  default     = 42443
+  default     = 443
 }
 
 variable "v2ray_allowed_cidrs" {
