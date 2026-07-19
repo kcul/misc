@@ -20,7 +20,10 @@ resource "aws_instance" "v2ray" {
   instance_type = "t4g.micro"
   subnet_id              = aws_subnet.v2ray.id
   key_name               = aws_key_pair.kcul.key_name
-  vpc_security_group_ids = [aws_security_group.v2ray.id]
+  vpc_security_group_ids = concat(
+    [aws_security_group.ssh.id],
+    [for sg in aws_security_group.v2ray : sg.id],
+  )
   iam_instance_profile = aws_iam_instance_profile.v2ray.name
   user_data = file("files/user-data.txt")
   ebs_optimized = true

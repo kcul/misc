@@ -1,6 +1,11 @@
-resource "aws_security_group" "v2ray" {
-  name_prefix        = "v2ray"
-  description = "v2ray traffic"
+locals {
+  sg_count          = ceil(length(var.v2ray_allowed_cidrs) / 60)
+  v2ray_cidr_chunks = chunklist(var.v2ray_allowed_cidrs, local.sg_count)
+}
+
+resource "aws_security_group" "ssh" {
+  name_prefix = "ssh"
+  description = "SSH access"
   vpc_id      = aws_default_vpc.default.id
   lifecycle {
     create_before_destroy = true
@@ -8,23 +13,13 @@ resource "aws_security_group" "v2ray" {
 }
 
 resource "aws_security_group_rule" "ingress_ssh" {
-  description       = "allow ssh from local"
+  description       = "SSH from ${var.ssh_allowed_cidrs[0]}"
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   protocol          = "tcp"
-  cidr_blocks       = [var.v2ray_allowed_cidr]
-  security_group_id = aws_security_group.v2ray.id
-}
-
-resource "aws_security_group_rule" "ingress_v2ray" {
-  description       = "allow v2ray/xray traffic"
-  type              = "ingress"
-  from_port         = var.v2ray_port
-  to_port           = var.v2ray_port
-  protocol          = "tcp"
-  cidr_blocks       = [var.v2ray_allowed_cidr]
-  security_group_id = aws_security_group.v2ray.id
+  cidr_blocks       = var.ssh_allowed_cidrs
+  security_group_id = aws_security_group.ssh.id
 }
 
 resource "aws_security_group_rule" "egress_all" {
@@ -34,5 +29,26 @@ resource "aws_security_group_rule" "egress_all" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id = aws_security_group.v2ray.id
+  security_group_id = aws_security_group.ssh.id
+}
+
+resource "aws_security_group" "v2ray" {
+  count = local.sg_count
+  name_prefix = "v2ray"
+  description = "v2ray traffic (group ${count.index + 1})"
+  vpc_id      = aws_default_vpc.default.id
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
+resource "aws_security_group_rule" "ingress_v2ray" {
+  count = local.sg_count
+  description       = "V2Ray ingress"
+  type              = "ingress"
+  from_port         = var.v2ray_port
+  to_port           = var.v2ray_port
+  protocol          = "tcp"
+  cidr_blocks       = local.v2ray_cidr_chunks[count.index]
+  security_group_id = aws_security_group.v2ray[count.index].id
 }
