@@ -17,7 +17,7 @@ data "aws_ami" "al2023" {
 
 resource "aws_instance" "v2ray" {
   ami           = data.aws_ami.al2023.id
-  instance_type = "t4g.nano"
+  instance_type = "t4g.micro"
   subnet_id              = aws_subnet.v2ray.id
   key_name               = aws_key_pair.kcul.key_name
   vpc_security_group_ids = [aws_security_group.v2ray.id]
