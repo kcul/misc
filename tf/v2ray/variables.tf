@@ -11,7 +11,7 @@ variable "profile" {
 }
 
 variable "ssh_allowed_cidrs" {
-  description = "CIDR blocks allowed to SSH into the instance"
+  description = "CIDR blocks allowed to SSH into the instance and connect via Mosh"
   type        = list(string)
   default     = ["27.155.210.128/32"]
 }
@@ -23,7 +23,7 @@ variable "v2ray_port" {
 }
 
 variable "v2ray_allowed_cidrs" {
-  description = "CIDR blocks allowed to connect to the v2ray/xray and SSH ports"
+  description = "CIDR blocks allowed to connect to the v2ray/xray"
   type        = list(string)
   default = [
     "27.155.210.128/32",
