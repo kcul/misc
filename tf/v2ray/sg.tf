@@ -1,6 +1,6 @@
 locals {
   sg_count          = ceil(length(var.v2ray_allowed_cidrs) / 60)
-  v2ray_cidr_chunks = chunklist(var.v2ray_allowed_cidrs, local.sg_count)
+  v2ray_cidr_chunks = chunklist(var.v2ray_allowed_cidrs, 60)
 }
 
 resource "aws_security_group" "ssh" {
