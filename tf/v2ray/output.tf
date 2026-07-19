@@ -25,3 +25,7 @@ output "v2ray_security_group_ids" {
 output "ssh_security_group_id" {
   value = aws_security_group.ssh.id
 }
+
+output "mosh_cli" {
+  value = "mosh --ssh='ssh -i ~/.ssh/kcul_ed25519' ec2-user@${aws_eip.v2ray.public_ip}"
+}
