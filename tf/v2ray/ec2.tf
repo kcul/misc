@@ -25,7 +25,13 @@ resource "aws_instance" "v2ray" {
     [for sg in aws_security_group.v2ray : sg.id],
   )
   iam_instance_profile = aws_iam_instance_profile.v2ray.name
-  user_data = file("files/user-data.txt")
+  user_data = templatefile("files/user-data.tftpl", {
+    install_script = file("files/install-xray-reality-al2023.sh")
+    port           = var.v2ray_port
+    uuid           = var.xray_uuid
+    dest           = var.reality_dest
+    sni            = var.reality_sni
+  })
   ebs_optimized = true
   monitoring = true
   metadata_options  {

@@ -22,6 +22,24 @@ variable "v2ray_port" {
   default     = 443
 }
 
+variable "xray_uuid" {
+  description = "VLESS user UUID — set in terraform.tfvars (gitignored), keep stable so rebuilt instances match existing client configs"
+  type        = string
+  sensitive   = true
+}
+
+variable "reality_dest" {
+  description = "TLS 1.3 destination REALITY masquerades as"
+  type        = string
+  default     = "www.cloudflare.com:443"
+}
+
+variable "reality_sni" {
+  description = "ServerName clients send (usually the REALITY dest host)"
+  type        = string
+  default     = "www.cloudflare.com"
+}
+
 variable "v2ray_allowed_cidrs" {
   description = "CIDR blocks allowed to connect to the v2ray/xray"
   type        = list(string)

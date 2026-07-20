@@ -1,0 +1,5 @@
+# Secrets and local state
+terraform.tfvars
+*.tfvars
+.terraform/
+crash.log
