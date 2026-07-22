@@ -53,7 +53,7 @@ resource "aws_instance" "v2ray" {
       volume_type = "gp3"
   }
   lifecycle {
-    ignore_changes = [user_data]
+    ignore_changes = [user_data, ami]
   }
 }
 
