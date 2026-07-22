@@ -204,6 +204,15 @@ EOF
     systemctl enable --now xray || die "Failed to start xray service"
 }
 
+enable_bbr() {
+    log "Enabling BBR congestion control..."
+    cat > /etc/sysctl.d/99-bbr.conf <<EOF
+net.core.default_qdisc = fq
+net.ipv4.tcp_congestion_control = bbr
+EOF
+    sysctl --system >/dev/null || die "Failed to apply sysctl settings"
+}
+
 open_firewall() {
     [[ "$OPEN_FIREWALL" == "true" ]] || return 0
     log "Opening port ${XRAY_PORT} in firewall..."
@@ -292,6 +301,7 @@ main() {
     generate_short_ids
     generate_config
     create_systemd_service
+    enable_bbr
     open_firewall
     print_summary
 }
