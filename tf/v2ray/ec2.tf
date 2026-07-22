@@ -30,10 +30,10 @@ resource "aws_instance" "v2ray" {
     port           = var.v2ray_port
     uuid           = var.xray_uuid
     dest           = var.reality_dest
-    sni            = var.reality_sni
+    sni            = local.reality_sni
   })
   ebs_optimized = true
-  monitoring = true
+  monitoring = false
   metadata_options  {
     http_endpoint = "enabled"
     http_put_response_hop_limit = 1

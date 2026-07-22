@@ -23,15 +23,9 @@ variable "xray_uuid" {
 }
 
 variable "reality_dest" {
-  description = "TLS 1.3 destination REALITY masquerades as"
+  description = "TLS 1.3 destination REALITY masquerades as (host:port); clients send the host part as SNI"
   type        = string
-  default     = "www.cloudflare.com:443"
-}
-
-variable "reality_sni" {
-  description = "ServerName clients send (usually the REALITY dest host)"
-  type        = string
-  default     = "www.cloudflare.com"
+  default     = "gateway.icloud.com:443"
 }
 
 variable "v2ray_allowed_cidrs" {
