@@ -4,6 +4,10 @@ This is configuration for helix
 ```shell
 cp config/helix/* ~/.config/helix/
 ```
+### wezterm
+```shell
+cp config/wezterm/wezterm.lua ~/.wezterm.lua
+```
 
 ### nvim
 This is configuration of nvim, sync this directory to ~/.config/nvim/ after neovim installed.
