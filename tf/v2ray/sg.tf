@@ -12,25 +12,7 @@ resource "aws_security_group" "ssh" {
   }
 }
 
-resource "aws_security_group_rule" "ingress_ssh" {
-  description       = "SSH from ${var.ssh_allowed_cidrs[0]}"
-  type              = "ingress"
-  from_port         = 22
-  to_port           = 22
-  protocol          = "tcp"
-  cidr_blocks       = var.ssh_allowed_cidrs
-  security_group_id = aws_security_group.ssh.id
-}
-
-resource "aws_security_group_rule" "ingress_mosh" {
-  description       = "Mosh from ${var.ssh_allowed_cidrs[0]}"
-  type              = "ingress"
-  from_port         = 60000
-  to_port           = 61000
-  protocol          = "udp"
-  cidr_blocks       = var.ssh_allowed_cidrs
-  security_group_id = aws_security_group.ssh.id
-}
+# SSH (port 22) and mosh (udp 60000-61000) disabled: use AWS SSM Session Manager instead.
 
 resource "aws_security_group_rule" "egress_all" {
   description       = "Allow all traffic out"

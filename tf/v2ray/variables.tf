@@ -4,12 +4,6 @@ variable "profile" {
   default = "default"
 }
 
-variable "ssh_allowed_cidrs" {
-  description = "CIDR blocks allowed to SSH into the instance and connect via Mosh"
-  type        = list(string)
-  default     = ["27.155.210.128/32"]
-}
-
 variable "v2ray_port" {
   description = "Port the v2ray/xray server listens on"
   type        = number
