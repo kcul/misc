@@ -26,7 +26,7 @@ variable "v2ray_allowed_cidrs" {
   description = "CIDR blocks allowed to connect to the v2ray/xray"
   type        = list(string)
   default = [
-    "27.155.210.128/32",
+    "59.61.177.186/32",
     # ---- Fujian Telecom AS133775 Xiamen IDC ----
     "27.159.96.0/21",
     "43.243.128.0/22",
@@ -66,6 +66,7 @@ variable "v2ray_allowed_cidrs" {
     "124.72.0.0/16",
     "125.77.0.0/16",
     "125.78.0.0/15",
+    "140.224.0.0/16",
     "183.78.180.0/22",
     "202.59.214.0/24",
     "202.59.215.0/24",
